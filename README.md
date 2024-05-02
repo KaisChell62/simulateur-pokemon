@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+🌟 Projet React Pokémon World 🌟
+Bienvenue dans le projet React Pokémon World ! Ce projet est conçu pour vous plonger dans l'univers passionnant des Pokémon, avec des fonctionnalités telles que la consultation des dernières actualités Pokémon, l'affichage de tous les Pokémon avec leurs attaques, des combats Pokémon et même un quiz pour tester vos connaissances !
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+📰 Actualités Pokémon
+Découvrez les toutes dernières nouvelles du monde Pokémon directement sur notre site ! Restez à jour avec les événements, les annonces de jeux, et bien plus encore.
 
-## Available Scripts
+📝 Installation
+Suivez ces étapes simples pour installer et exécuter le projet localement :
 
-In the project directory, you can run:
+Cloner le projet
+git clone https://github.com/votre-utilisateur/pokemon-world.git
 
-### `npm start`
+Accéder au répertoire
+cd simulateur-pokemon
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Installer les dépendances
+npm install
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Démarrer le serveur de développement
+npm start
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Accéder au site
+Ouvrez votre navigateur et accédez à http://localhost:3000
+🐾 Liste de Pokémon
+Explorez une liste complète de tous les Pokémon, avec des détails sur leurs attaques, leurs types et plus encore !
 
-### `npm run build`
+⚔️ Combat Pokémon
+Choisissez votre Pokémon et combattez contre un redoutable robot dans une bataille épique pour la suprématie Pokémon !
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+🧠 Quiz Pokémon
+Testez vos connaissances sur l'univers Pokémon avec notre quiz interactif ! Répondez à des questions sur les types de Pokémon, leurs évolutions, et bien plus encore.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+🚀 Contribuer
+Vous souhaitez contribuer au projet ? Nous serions ravis de recevoir vos suggestions, rapports de bugs ou même vos pull requests ! N'hésitez pas à ouvrir une issue ou à soumettre une PR.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+📝 Licence
+Ce projet est sous licence MIT. Consultez le fichier LICENSE pour plus de détails.
