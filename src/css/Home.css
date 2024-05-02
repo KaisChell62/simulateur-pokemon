@@ -1,0 +1,135 @@
+body {
+  font-family: 'Arial Black', sans-serif;
+  color: black; /* couleur du texte en noir */
+}
+
+
+
+
+/* Styles pour la section des dernières nouvelles Pokémon */
+.news-section {
+  text-align: center;
+  padding: 20px;
+}
+
+.news-section h2 {
+  color: #FF0000; /* Rouge clair */
+  font-family: 'Arial Black', sans-serif; /* Police Algerian */
+}
+
+.news-section .news-card h3,
+.news-section .news-card p {
+  color: #000; /* Noir fort */
+}
+
+/* Styles pour les cartes de nouvelles Pokémon */
+.news-carousel {
+  overflow: hidden;
+}
+
+.news-card-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  padding: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.news-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: calc(100% - 40px);
+  flex: 1;
+}
+
+/* Style pour la flèche de défilement */
+.next,
+.prev {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: #333;
+}
+
+.prev {
+  left: 20px;
+}
+
+.next {
+  right: 20px;
+}
+
+/* Styles pour la section Galerie de Pokémon */
+.gallery-section {
+  text-align: center;
+  padding: 20px;
+}
+
+.gallery-section h2 {
+  color: #FF0000; /* Rouge clair */
+  font-family: 'Arial Black', sans-serif; /* Police Algerian */
+}
+
+.pokemon-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.pokemon-card {
+  width: 200px;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  text-align: center;
+  animation: pokemonAnimation 2s infinite alternate;
+}
+
+.pokemon-card img {
+  max-width: 100%;
+}
+
+.pokemon-card p {
+  color: #000;
+}
+
+/* Styles pour la section Guides et Tutoriels et Liens Utiles */
+.guides-section, .useful-links-section {
+  text-align: center;
+  padding: 20px;
+}
+
+.guides-section h2, .useful-links-section h2 {
+  color: #FF0000; /* Rouge clair */
+  font-family: 'Arial Black', sans-serif; /* Police Algerian */
+}
+
+.guides-section p, .useful-links-section p {
+  color: #000; /* Noir fort */
+  font-family: 'Arial Black', sans-serif; /* Police Algerian */
+}
+
+.useful-links-section ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.useful-links-section li {
+  margin-bottom: 10px;
+}
+
+.useful-links-section a {
+  color: #000;
+  text-decoration: none;
+}
+
+.useful-links-section a:hover {
+  text-decoration: underline;
+}

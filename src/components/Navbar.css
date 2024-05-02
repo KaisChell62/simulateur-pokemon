@@ -1,0 +1,40 @@
+hr {
+  border: none; /* Supprimer la bordure */
+  height: 1px; /* Définir la hauteur à 1 pixel */
+  background-color: transparent; /* Définir la couleur de fond transparente */
+}
+
+
+.navbar {
+  background-color: #ffffff; /* Couleur de fond du menu */
+  padding: 20px; /* Espacement intérieur du menu */
+  border-radius: 10px; /* Arrondi des coins du menu */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
+  width: fit-content; /* Largeur ajustée au contenu */
+  margin: 0 auto; /* Centrage horizontal */
+}
+
+.navbar ul {
+  list-style-type: none; /* Suppression des puces */
+  padding: 0; /* Suppression du padding par défaut */
+  margin: 0; /* Suppression de la marge par défaut */
+}
+
+.navbar ul li {
+  display: inline; /* Affichage en ligne des éléments de liste */
+  margin-right: 20px; /* Espacement entre les éléments */
+}
+
+.navbar ul li:last-child {
+  margin-right: 0; /* Aucun espacement à droite pour le dernier élément */
+}
+
+.navbar ul li a {
+  text-decoration: none; /* Suppression du soulignement des liens */
+  color: #333333; /* Couleur du texte */
+  font-weight: bold; /* Police en gras */
+}
+
+.navbar ul li a:hover {
+  color: #007bff; /* Couleur du texte au survol */
+}

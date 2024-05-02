@@ -1,0 +1,106 @@
+.container {
+    font-family: sans-serif;
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  .title {
+    text-align: center;
+    color: #333;
+  }
+  
+  .search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .search-bar::placeholder {
+    color: #999;
+  }
+  
+  .pokemon-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .pokemon-card {
+    width: 200px;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    text-align: center;
+    animation: pokemonAnimation 2s infinite alternate;
+  }
+  
+  .pokemon-image {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 10px;
+  }
+  
+  .pokemon-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .stat {
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 10px;
+  }
+  
+  .hp, .attack, .defense, .special-attack, .special-defense, .speed {
+    display: inline-block;
+  }
+  
+  .hp {
+    background-color: #4CAF50; /* Vert pour la santé */
+  }
+  
+  .attack {
+    background-color: #2196F3; /* Bleu pour l'attaque */
+  }
+  
+  .defense {
+    background-color: #f44336; /* Rouge pour la défense */
+  }
+  
+  .special-attack {
+    background-color: #FFC107; /* Jaune pour l'attaque spéciale */
+  }
+  
+  .special-defense {
+    background-color: #9C27B0; /* Violet pour la défense spéciale */
+  }
+  
+  .speed {
+    background-color: #FF5722; /* Orange pour la vitesse */
+  }
+  
+  @keyframes pokemonAnimation {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  
