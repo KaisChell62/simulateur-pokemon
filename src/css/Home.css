@@ -14,7 +14,7 @@ body {
 
 .news-section h2 {
   color: #FF0000; /* Rouge clair */
-  font-family: 'Arial Black', sans-serif; /* Police Algerian */
+  font-family: 'Arial Black', sans-serif; 
 }
 
 .news-section .news-card h3,
