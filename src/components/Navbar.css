@@ -1,7 +1,7 @@
 hr {
   border: none; /* Supprimer la bordure */
-  height: 1px; /* Définir la hauteur à 1 pixel */
-  background-color: transparent; /* Définir la couleur de fond transparente */
+  height: 1px; 
+  background-color: transparent; 
 }
 
 
