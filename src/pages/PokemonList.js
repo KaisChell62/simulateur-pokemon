@@ -7,13 +7,16 @@ function PokemonList() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    axios.get('https://pokeapi.co/api/v2/pokemon?limit=500')
-      .then(response => {
-        setPokemonList(response.data.results);
-      })
-      .catch(error => {
-        console.error('Erreur lors de la récupération de la liste de Pokémon :', error);
-      });
+    const fetchPokemonList = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/api/pokemon');
+        setPokemonList(response.data);
+      } catch (error) {
+        console.error('Error fetching Pokemon list:', error);
+      }
+    };
+
+    fetchPokemonList();
   }, []);
 
   const handleSearch = (event) => {
@@ -21,7 +24,7 @@ function PokemonList() {
   };
 
   const filteredPokemon = pokemonList.filter(pokemon =>
-    pokemon.name.toLowerCase().includes(searchTerm.toLowerCase())
+    pokemon.Name && pokemon.Name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -38,42 +41,25 @@ function PokemonList() {
       </div>
       <div className="pokemon-grid">
         {filteredPokemon.map((pokemon, index) => (
-          <Pokemon key={index} name={pokemon.name} />
+          <Pokemon key={index} pokemon={pokemon} />
         ))}
       </div>
     </div>
   );
 }
 
-function Pokemon({ name }) {
-  const [pokemonData, setPokemonData] = useState(null);
-
-  useEffect(() => {
-    axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`)
-      .then(response => {
-        setPokemonData(response.data);
-      })
-      .catch(error => {
-        console.error(`Erreur lors de la récupération des données de ${name} :`, error);
-      });
-  }, [name]);
-
-  if (!pokemonData) {
-    return <div className="pokemon-card">Chargement...</div>;
-  }
-
-  const { sprites, stats } = pokemonData;
-
+function Pokemon({ pokemon }) {
   return (
     <div className="pokemon-card">
-      <h2 className="pokemon-name">{name}</h2>
-      <img src={sprites.front_default} alt={name} className="pokemon-image" />
+      <h2 className="pokemon-name">{pokemon.Name}</h2>
       <div className="pokemon-stats">
-        {stats.map((stat, index) => (
-          <span key={index} className={`stat ${stat.stat.name}`}>
-            {stat.stat.name}: {stat.base_stat}
-          </span>
-        ))}
+        <p>Type(s): {pokemon.Types.join(', ')}</p>
+        <p>HP: {pokemon.HP}</p>
+        <p>Attack: {pokemon.Attack}</p>
+        <p>Defense: {pokemon.Defense}</p>
+        <p>Special Attack: {pokemon["Special Attack"]}</p>
+        <p>Special Defense: {pokemon["Special Defense"]}</p>
+        <p>Speed: {pokemon.Speed}</p>
       </div>
     </div>
   );

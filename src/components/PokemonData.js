@@ -3,11 +3,12 @@ import axios from 'axios';
 
 function PokemonData() {
   const [data, setData] = useState(null);
+  const [resource, setResource] = useState('pokemon'); 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/pokemon');
+        const response = await axios.get(`http://localhost:3001/api/${resource}`);
         setData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -15,10 +16,16 @@ function PokemonData() {
     };
 
     fetchData();
-  }, []);
+  }, [resource]);
 
   return (
     <div>
+      <div>
+        <button onClick={() => setResource('pokemon')}>Pokémon</button>
+        <button onClick={() => setResource('abilities')}>Abilities</button>
+        <button onClick={() => setResource('moves')}>Moves</button>
+        <button onClick={() => setResource('types')}>Types</button>
+      </div>
       {data && (
         <ul>
           {data.map((item) => (

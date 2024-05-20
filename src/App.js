@@ -7,22 +7,41 @@ import Combat from './pages/Combat';
 import Quiz from './pages/quiz';
 
 function App() {
-  const [pokemonList, setPokemonList] = useState([]);
+  const [data, setData] = useState({
+    pokemon: [],
+    abilities: [],
+    moves: [],
+    types: []
+  });
 
-  // Fonction pour récupérer les données des Pokémon depuis le backend
-  const fetchPokemon = async () => {
+  // Fonction pour récupérer les données depuis le backend pour une ressource donnée
+  const fetchData = async (resource) => {
     try {
-      const response = await fetch('http://localhost:3001/api/pokemon');
+      const response = await fetch(`http://localhost:3001/api/${resource}`);
       const data = await response.json();
-      setPokemonList(data);
+      return data;
     } catch (error) {
-      console.error('Error fetching Pokemon data:', error);
+      console.error(`Error fetching ${resource} data:`, error);
+      return [];
     }
   };
 
-  // Utilise useEffect pour charger la liste des Pokémon au chargement de l'application
+  // Fonction pour récupérer les données de toutes les ressources
+  const fetchAllData = async () => {
+    const pokemonData = await fetchData('pokemon');
+    const abilitiesData = await fetchData('abilities');
+    const movesData = await fetchData('moves');
+    const typesData = await fetchData('types');
+    return { pokemon: pokemonData, abilities: abilitiesData, moves: movesData, types: typesData };
+  };
+
+  // Utilise useEffect pour charger les données au chargement de l'application
   useEffect(() => {
-    fetchPokemon();
+    const fetchDataAsync = async () => {
+      const allData = await fetchAllData();
+      setData(allData);
+    };
+    fetchDataAsync();
   }, []);
 
   return (
@@ -41,8 +60,8 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* Passe la liste des Pokémon en tant que prop au composant PokemonList */}
-          <Route path="/pokemon-list" element={<PokemonList pokemonList={pokemonList} />} />
+          {/* Passe les données de toutes les ressources en tant que props */}
+          <Route path="/pokemon-list" element={<PokemonList data={data} />} />
           <Route path="/combat" element={<Combat />} />
           <Route path="/quiz" element={<Quiz />} />
         </Routes>
