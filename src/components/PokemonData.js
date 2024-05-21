@@ -3,12 +3,12 @@ import axios from 'axios';
 
 function PokemonData() {
   const [data, setData] = useState(null);
-  const [resource, setResource] = useState('pokemon'); 
+  const maxPokemons = 30; // Nombre maximum de Pokémon à afficher
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/${resource}`);
+        const response = await axios.get('http://localhost:3001/api/pokemon');
         setData(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -16,20 +16,27 @@ function PokemonData() {
     };
 
     fetchData();
-  }, [resource]);
+  }, []);
 
   return (
     <div>
-      <div>
-        <button onClick={() => setResource('pokemon')}>Pokémon</button>
-        <button onClick={() => setResource('abilities')}>Abilities</button>
-        <button onClick={() => setResource('moves')}>Moves</button>
-        <button onClick={() => setResource('types')}>Types</button>
-      </div>
       {data && (
         <ul>
-          {data.map((item) => (
-            <li key={item.id}>{item.name}</li>
+          {data.slice(0, maxPokemons).map((pokemon) => (
+            <li key={pokemon._id}>
+              <h3>{pokemon.Name}</h3>
+              <ul>
+                <li>Type(s): {pokemon.Types.join(', ')}</li>
+                <li>Abilities: {pokemon.Abilities.join(', ')}</li>
+                <li>Tier: {pokemon.Tier}</li>
+                <li>HP: {pokemon.HP}</li>
+                <li>Attack: {pokemon.Attack}</li>
+                <li>Defense: {pokemon.Defense}</li>
+                <li>Special Attack: {pokemon["Special Attack"]}</li>
+                <li>Special Defense: {pokemon["Special Defense"]}</li>
+                <li>Speed: {pokemon.Speed}</li>
+              </ul>
+            </li>
           ))}
         </ul>
       )}
