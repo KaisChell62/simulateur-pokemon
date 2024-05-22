@@ -63,7 +63,7 @@ function Combat() {
     setPeutAttaquer(false);
     setTimeout(() => {
       attaquerRobot();
-    }, 1000); // Attendre 1 seconde avant que le robot attaque
+    }, 5000); // Attendre 1 seconde avant que le robot attaque
   };
 
   const attaquerRobot = () => {
@@ -109,7 +109,7 @@ function Combat() {
           <ul>
             {pokemonList.map(pokemon => (
               <li key={pokemon._id} onClick={() => choisirPokemon(pokemon.Name)}>
-                <div className="pokemon-card rotate-effect">
+                <div className="pokemon-card">
                   <h3>{pokemon.Name}</h3>
                   <div className="pokemon-stats">
                     <div className="stat hp">HP: {pokemon.HP}</div>
