@@ -63,7 +63,7 @@ function Combat() {
     setPeutAttaquer(false);
     setTimeout(() => {
       attaquerRobot();
-    }, 5000); // Attendre 1 seconde avant que le robot attaque
+    }, 5000); // Attendre  seconde avant que le robot attaque
   };
 
   const attaquerRobot = () => {
