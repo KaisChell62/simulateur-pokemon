@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../css/PokemonList.css'; // Assurez-vous que le chemin vers votre fichier CSS est correct
 
-function PokemonData() {
-  const [pokemonData, setPokemonData] = useState(null);
+function PokemonList() {
+  const [pokemonData, setPokemonData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:3001/api/pokemon');
-        setPokemonData(response.data);
+        // Supprimer l'espace avant le nom
+        const cleanedData = response.data.map(pokemon => {
+          const cleanedPokemon = { ...pokemon };
+          if (cleanedPokemon[' Name']) {
+            cleanedPokemon['Name'] = cleanedPokemon[' Name'].trim();
+          }
+          return cleanedPokemon;
+        });
+        // Limiter à 30 Pokémon
+        setPokemonData(cleanedData.slice(0, 30));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -18,27 +28,25 @@ function PokemonData() {
   }, []);
 
   return (
-    <div>
-      {pokemonData && (
-        <div>
-          {pokemonData.map(pokemon => (
-            <div key={pokemon._id}>
-              <h3>{pokemon.Name}</h3>
-              <p>Types: {pokemon.Types.map(type => type.name).join(', ')}</p>
-              <p>Abilities: {pokemon.Abilities.map(ability => ability.name).join(', ')}</p>
-              <p>Moves: {pokemon.Moves.map(move => move.Name).join(', ')}</p>
-              <p>HP: {pokemon.HP}</p>
-              <p>Attack: {pokemon.Attack}</p>
-              <p>Defense: {pokemon.Defense}</p>
-              <p>Special Attack: {pokemon['Special Attack']}</p>
-              <p>Special Defense: {pokemon['Special Defense']}</p>
-              <p>Speed: {pokemon.Speed}</p>
+    <div className="container">
+      <h1 className="title">Liste des Pokémon</h1>
+      <div className="pokemon-grid">
+        {pokemonData.map(pokemon => (
+          <div key={pokemon._id} className="pokemon-card">
+            <h3>{pokemon.Name}</h3>
+            <div className="pokemon-stats">
+              <div className="stat hp">HP: {pokemon.HP}</div>
+              <div className="stat attack">Attack: {pokemon.Attack}</div>
+              <div className="stat defense">Defense: {pokemon.Defense}</div>
+              <div className="stat special-attack">Special Attack: {pokemon['Special Attack']}</div>
+              <div className="stat special-defense">Special Defense: {pokemon['Special Defense']}</div>
+              <div className="stat speed">Speed: {pokemon.Speed}</div>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-export default PokemonData;
+export default PokemonList;

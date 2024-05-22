@@ -1,38 +1,195 @@
-.arena-image {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-image: url('../picture/arene.png'); 
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
 
 
 .combat-container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Buttons */
+button {
+  background-color: #ff4500;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: transform 0.1s, background-color 0.1s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background-color: #ff6347;
+}
+
+button:active {
+  animation: bounce 0.2s;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  50% { transform: translateX(3px); }
+  75% { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes colorchange {
+  0% { background-color: #ff4500; }
+  25% { background-color: #ff6347; }
+  50% { background-color: #ff4500; }
+  75% { background-color: #ff6347; }
+  100% { background-color: #ff4500; }
+}
+
+button.animate-color {
+  animation: colorchange 0.5s infinite;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.rotate-effect {
+  display: inline-block;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.select-pokemon li {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pokemon-card {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.select-pokemon {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Pokemon selection */
+.select-pokemon {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.select-pokemon ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.select-pokemon li {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+  padding: 20px;
+  transition: transform 0.1s;
+  cursor: pointer;
+}
+
+.select-pokemon li:hover {
+  transform: scale(1.05);
+  background-color: #87ceeb;
+}
+
+.pokemon-card {
+  border: 2px solid #000;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.1s, transform 0.1s;
+}
+
+.pokemon-card:hover {
+  background-color: #f0f8ff;
+  transform: scale(1.05);
+}
+
+/* Battle screen */
+.battle-screen {
+  padding: 20px;
+  background-color: #ffebcd;
+  border: 2px solid #000;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 20px;
   position: relative;
+  overflow: hidden;
 }
 
-.combat-pokemon {
-  margin-top: 370px;
+.battle-screen h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
-.selection-container {
-  margin-top: 100px;
+.battle-screen p {
+  font-size: 18px;
+  margin: 10px 0;
 }
 
-.pokemon-message {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 14px;
-  pointer-events: none; /* pour que la bulle ne bloque pas les interactions avec le Pokémon en dessous */
+.battle-screen button {
+  display: block;
+  margin: 10px auto;
+  animation: shake 0.2s;
 }
 
+.message {
+  font-size: 16px;
+  color: #d2691e;
+  margin: 10px 0;
+}
+
+/* Health bars */
+.health-bar {
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.health-bar span {
+  display: block;
+  height: 20px;
+  background-color: #76c7c0;
+  width: 100%; /* Update this width dynamically in your React component */
+}

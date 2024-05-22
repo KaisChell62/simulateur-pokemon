@@ -1,26 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../css/Combat.css';
-import arenaImage from '../picture/arene.png';
-
-
 
 function Combat() {
   const [pokemonList, setPokemonList] = useState([]);
-  const [selectedPokemon1, setSelectedPokemon1] = useState(null);
-  const [selectedPokemon2, setSelectedPokemon2] = useState(null);
-  const [pokemonDetails1, setPokemonDetails1] = useState(null);
-  const [pokemonDetails2, setPokemonDetails2] = useState(null);
-  const [isCombatStarted, setIsCombatStarted] = useState(false);
-  const [health1, setHealth1] = useState(100);
-  const [health2, setHealth2] = useState(100);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+  const [combatDemarre, setCombatDemarre] = useState(false);
+  const [afficherListePokemon, setAfficherListePokemon] = useState(false);
+  const [pointsDeVieJoueur, setPointsDeVieJoueur] = useState(100);
+  const [pointsDeVieRobot, setPointsDeVieRobot] = useState(100);
   const [message, setMessage] = useState('');
-  const [isShieldActive1, setIsShieldActive1] = useState(false);
-  const [isShieldActive2, setIsShieldActive2] = useState(false);
-  const [isPlayerTurn, setIsPlayerTurn] = useState(true);
-  const [canUseAction, setCanUseAction] = useState(true);
-  
+  const [estAuTourDuJoueur, setEstAuTourDuJoueur] = useState(true);
+  const [peutAttaquer, setPeutAttaquer] = useState(true);
+  const [attaquesPokemon, setAttaquesPokemon] = useState([]);
 
   useEffect(() => {
     fetchPokemonList();
@@ -28,246 +20,134 @@ function Combat() {
 
   const fetchPokemonList = async () => {
     try {
-      const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1000');
-      setPokemonList(response.data.results);
+      const response = await axios.get('http://localhost:3001/api/pokemon');
+      const donneesPokemon = response.data.map(pokemon => {
+        const pokemonNettoye = { ...pokemon };
+        if (pokemonNettoye[' Name']) {
+          pokemonNettoye['Name'] = pokemonNettoye[' Name'].trim();
+        }
+        return pokemonNettoye;
+      });
+      setPokemonList(donneesPokemon.slice(0, 30));
     } catch (error) {
-      console.error('Erreur lors de la récupération de la liste de Pokémon :', error);
+      console.error('Erreur lors de la récupération des données Pokémon:', error);
     }
   };
 
-  const fetchPokemonDetails = useCallback(async (pokemonName, setPokemonDetails) => {
-    try {
-      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-      setPokemonDetails(response.data);
-    } catch (error) {
-      console.error(`Erreur lors de la récupération des détails de ${pokemonName} :`, error);
-    }
+  const choisirPokemonAleatoire = () => {
+    const indexAleatoire = Math.floor(Math.random() * pokemonList.length);
+    const pokemonAleatoire = pokemonList[indexAleatoire].Name;
+    setSelectedPokemon(pokemonAleatoire);
+    setCombatDemarre(true);
+    choisirPokemonRobotAleatoire();
+  };
+
+  const choisirPokemon = (nomPokemon) => {
+    setSelectedPokemon(nomPokemon);
+    setCombatDemarre(true);
+    setAfficherListePokemon(false);
+    choisirPokemonRobotAleatoire();
+  };
+
+  const choisirPokemonRobotAleatoire = () => {
+    const indexAleatoire = Math.floor(Math.random() * pokemonList.length);
+    const pokemonAleatoire = pokemonList[indexAleatoire].Name;
+    setMessage(`Le Pokémon ennemi ${pokemonAleatoire} a été choisi !`);
+  };
+
+  const attaquer = (attaque) => {
+    const degats = Math.floor(Math.random() * 20) + 1;
+    setPointsDeVieRobot(prevPV => Math.max(prevPV - degats, 0));
+    setMessage(`Vous attaquez avec ${attaque} et infligez ${degats} dégâts au Pokémon ennemi !`);
+    setEstAuTourDuJoueur(false);
+    setPeutAttaquer(false);
+    setTimeout(() => {
+      attaquerRobot();
+    }, 1000); // Attendre 1 seconde avant que le robot attaque
+  };
+
+  const attaquerRobot = () => {
+    const indexAleatoire = Math.floor(Math.random() * attaquesPokemon.length);
+    const attaqueAleatoire = attaquesPokemon[indexAleatoire].Name;
+    const degats = Math.floor(Math.random() * 20) + 1;
+    setPointsDeVieJoueur(prevPV => Math.max(prevPV - degats, 0));
+    setMessage(`Le Pokémon ennemi attaque avec ${attaqueAleatoire} et vous inflige ${degats} dégâts !`);
+    setEstAuTourDuJoueur(true);
+    setPeutAttaquer(true);
+  };
+
+  const finirTour = () => {
+    setEstAuTourDuJoueur(true);
+    setPeutAttaquer(true);
+    attaquerRobot();
+  };
+
+  useEffect(() => {
+    const fetchAttaquesPokemon = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/api/moves');
+        setAttaquesPokemon(response.data.slice(0, 4)); // Récupérer seulement les 4 premières attaques
+      } catch (error) {
+        console.error('Erreur lors de la récupération des attaques Pokémon:', error);
+      }
+    };
+
+    fetchAttaquesPokemon();
   }, []);
 
-  const handleAttack = useCallback((attacker, defender) => {
-    const damage = Math.floor(Math.random() * 20) + 1;
-    if (defender === 1) {
-      if (!isShieldActive1) {
-        setHealth1((prevHealth) => Math.max(prevHealth - damage, 0));
-        setMessage(`Le Pokémon ${selectedPokemon1} attaque et inflige ${damage} dégâts au Pokémon ${attacker} !`);
-      } else {
-        setMessage(`Le bouclier du Pokémon ${selectedPokemon1} protège contre les dégâts de l'attaque de ${attacker} !`);
-      }
-    } else if (defender === 2) {
-      if (!isShieldActive2) {
-        setHealth2((prevHealth) => Math.max(prevHealth - damage, 0));
-        setMessage(`Le Pokémon ${selectedPokemon2} attaque et inflige ${damage} dégâts au Pokémon ${attacker} !`);
-      } else {
-        setMessage(`Le bouclier du Pokémon ${selectedPokemon2} protège contre les dégâts de l'attaque de ${attacker} !`);
-      }
-    }
-    setIsShieldActive1(false);
-    setIsShieldActive2(false);
-    setIsPlayerTurn(false);
-    setCanUseAction(false);
-  }, [isShieldActive1, isShieldActive2, selectedPokemon1, selectedPokemon2]);
-
-  const handleHeal = useCallback((target) => {
-    const healAmount = Math.floor(Math.random() * 20) + 1;
-    if (target === 1) {
-      setHealth1((prevHealth) => Math.min(prevHealth + healAmount, 100));
-      setMessage(`Le Pokémon ${selectedPokemon1} récupère ${healAmount} points de vie !`);
-    } else if (target === 2) {
-      setHealth2((prevHealth) => Math.min(prevHealth + healAmount, 100));
-      setMessage(`Le Pokémon ${selectedPokemon2} récupère ${healAmount} points de vie !`);
-    }
-    setIsShieldActive1(false);
-    setIsShieldActive2(false);
-    setIsPlayerTurn(false);
-    setCanUseAction(false);
-  }, [selectedPokemon1, selectedPokemon2]);
-
-  const handleSpecialAttack = useCallback((attacker, defender) => {
-    const damage = Math.floor(Math.random() * 30) + 10;
-    if (defender === 1) {
-      if (!isShieldActive1) {
-        setHealth1((prevHealth) => Math.max(prevHealth - damage, 0));
-        setMessage(`Le Pokémon ${selectedPokemon1} utilise son attaque spéciale et inflige ${damage} dégâts au Pokémon ${attacker} !`);
-      } else {
-        setMessage(`Le bouclier du Pokémon ${selectedPokemon1} protège contre les dégâts de l'attaque spéciale de ${attacker} !`);
-      }
-    } else if (defender === 2) {
-      if (!isShieldActive2) {
-        setHealth2((prevHealth) => Math.max(prevHealth - damage, 0));
-        setMessage(`Le Pokémon ${selectedPokemon2} utilise son attaque spéciale et inflige ${damage} dégâts au Pokémon ${attacker} !`);
-      } else {
-        setMessage(`Le bouclier du Pokémon ${selectedPokemon2} protège contre les dégâts de l'attaque spéciale de ${attacker} !`);
-      }
-    }
-    setIsShieldActive1(false);
-    setIsShieldActive2(false);
-    setIsPlayerTurn(false);
-    setCanUseAction(false);
-  }, [isShieldActive1, isShieldActive2, selectedPokemon1, selectedPokemon2]);
-
-  const handleShield = useCallback((user) => {
-    if (user === 1) {
-      setIsShieldActive1(true);
-      setMessage(`Le Pokémon ${selectedPokemon1} utilise un bouclier pour se protéger !`);
-    } else if (user === 2) {
-      setIsShieldActive2(true);
-      setMessage(`Le Pokémon ${selectedPokemon2} utilise un bouclier pour se protéger !`);
-    }
-    setIsPlayerTurn(false);
-    setCanUseAction(false);
-  }, [selectedPokemon1, selectedPokemon2]);
-
-  const handleActionClick = useCallback((action) => {
-    if (canUseAction) {
-      switch (action) {
-        case 'attack':
-          handleAttack(selectedPokemon1, 2);
-          break;
-        case 'special':
-          handleSpecialAttack(selectedPokemon1, 2);
-          break;
-        case 'heal':
-          handleHeal(1);
-          break;
-        case 'shield':
-          handleShield(1);
-          break;
-        default:
-          break;
-      }
-    }
-  }, [canUseAction, handleAttack, handleSpecialAttack, handleHeal, handleShield, selectedPokemon1]);
-
-  useEffect(() => {
-    if (selectedPokemon1) {
-      fetchPokemonDetails(selectedPokemon1, setPokemonDetails1);
-    }
-  }, [selectedPokemon1]);
-  
-  useEffect(() => {
-    if (selectedPokemon2) {
-      fetchPokemonDetails(selectedPokemon2, setPokemonDetails2);
-    }
-  }, [selectedPokemon2]);
-  
-  useEffect(() => {
-    let timerId;
-    if (!isPlayerTurn && isCombatStarted) {
-      timerId = setTimeout(() => {
-        const actionIndex = Math.floor(Math.random() * 4);
-        switch (actionIndex) {
-          case 0:
-            handleAttack(selectedPokemon2, 1);
-            break;
-          case 1:
-            handleSpecialAttack(selectedPokemon2, 1);
-            break;
-          case 2:
-            handleHeal(2);
-            break;
-          case 3:
-            if (Math.random() < 0.5) {
-              handleShield(2);
-            } else {
-              handleAttack(selectedPokemon2, 1);
-            }
-            break;
-          default:
-            break;
-        }
-        setIsPlayerTurn(true);
-        setCanUseAction(true);
-      }, 5000);
-    }
-  
-    return () => clearTimeout(timerId);
-  }, [isPlayerTurn, isCombatStarted, handleAttack, handleSpecialAttack, handleHeal, handleShield, selectedPokemon2]);
-  
-  useEffect(() => {
-    if (isCombatStarted) {
-      const randomIndex = Math.floor(Math.random() * pokemonList.length);
-      const randomPokemon = pokemonList[randomIndex];
-      setSelectedPokemon2(randomPokemon.name);
-      fetchPokemonDetails(randomPokemon.name, setPokemonDetails2);
-    }
-  }, [isCombatStarted, pokemonList]);
-  
-  useEffect(() => {
-    if (health1 <= 0) {
-      alert('Game Over');
-    }
-    if (health2 <= 0) {
-      alert('Bravo, tu as gagné le combat !');
-    }
-  }, [health1, health2]);
-  
-  
-
-  
   return (
     <div className="combat-container">
-      {!isCombatStarted && <h2>Combat Pokémon</h2>}
-      {isCombatStarted && (
-        <img src={arenaImage} alt="Arène" className="arena-image" />
-      )}
-      {isCombatStarted ? (
-        <div className="combat-pokemon">
-          <div style={{ display: 'flex', alignItems: 'flex-start', marginTop: '10px' }}>
-            <div style={{ position: 'absolute', left: '350px' }}>
-              <h3>{selectedPokemon1}</h3>
-              {pokemonDetails1 && (
-                <>
-                  <div style={{ position: 'relative' }}>
-                    <img src={pokemonDetails1.sprites.front_default} alt={selectedPokemon1} className="pokemon-image" />
-                    <div>Vie: {health1}</div>
-                  </div>
-                </>
-              )}
-              {isPlayerTurn && canUseAction && (
-                <>
-                  <button onClick={() => handleActionClick('attack')}>Attaquer</button>
-                  <button onClick={() => handleActionClick('special')}>Attaque Spéciale</button>
-                  <button onClick={() => handleActionClick('heal')}>Soigner</button>
-                  <button onClick={() => handleActionClick('shield')}>Bouclier</button>
-                </>
-              )}
-            </div>
-            <div style={{ position: 'absolute', left: '1340px' }}>
-              <h3>{selectedPokemon2}</h3>
-              {pokemonDetails2 && (
-                <>
-                  <div style={{ position: 'relative' }}>
-                    <img src={pokemonDetails2.sprites.front_default} alt={selectedPokemon2} className="pokemon-image" />
-                    <div>Vie: {health2}</div>
-                  </div>
-                </>
-              )}
-              {!isPlayerTurn && (
-                <p>C'est le tour du robot...</p>
-              )}
-            </div>
-          </div>
+      {!combatDemarre && (
+        <div>
+          <button className="animate-color" onClick={choisirPokemonAleatoire}>Combat aléatoire</button>
+          <button onClick={() => setAfficherListePokemon(true)}>Choisir un Pokémon</button>
         </div>
-      ) : (
-        <div className="selection-container">
-          <h3>Sélectionnez le premier Pokémon :</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-            {pokemonList.map((pokemon, index) => (
-              <div key={index} onClick={() => { setSelectedPokemon1(pokemon.name); setIsCombatStarted(true); }}>
-                <h4>{pokemon.name}</h4>
-                <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`} alt={pokemon.name} className="pokemon-image" />
-              </div>
+      )}
+      {afficherListePokemon && !combatDemarre && (
+        <div className="select-pokemon">
+          <h2>Choisir un Pokémon</h2>
+          <ul>
+            {pokemonList.map(pokemon => (
+              <li key={pokemon._id} onClick={() => choisirPokemon(pokemon.Name)}>
+                <div className="pokemon-card rotate-effect">
+                  <h3>{pokemon.Name}</h3>
+                  <div className="pokemon-stats">
+                    <div className="stat hp">HP: {pokemon.HP}</div>
+                    <div className="stat attack">Attaque: {pokemon.Attack}</div>
+                    <div className="stat defense">Défense: {pokemon.Defense}</div>
+                    <div className="stat special-attack">Attaque Spéciale: {pokemon['Special Attack']}</div>
+                    <div className="stat special-defense">Défense Spéciale: {pokemon['Special Defense']}</div>
+                    <div className="stat speed">Vitesse: {pokemon.Speed}</div>
+                  </div>
+                </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       )}
-      <br />
-      <Link to="/" style={{ position: 'absolute', bottom: '-450px', left: '30px', fontFamily: 'Arial Black', color: 'black' }}>Retour à l'accueil</Link>
+      {combatDemarre && (
+        <div className="battle-screen">
+          <h2>Combat Pokémon</h2>
+          <p>Votre Pokémon : {selectedPokemon}</p>
+          <div className="health-bar">
+            <span style={{ width: `${pointsDeVieJoueur}%` }}></span>
+          </div>
+          <p>Points de vie du joueur : {pointsDeVieJoueur}</p>
+          <div className="health-bar">
+            <span style={{ width: `${pointsDeVieRobot}%` }}></span>
+          </div>
+          <p>Points de vie du robot : {pointsDeVieRobot}</p>
+          {attaquesPokemon.map((attaque, index) => (
+            <button key={index} disabled={!estAuTourDuJoueur || !peutAttaquer} onClick={() => attaquer(attaque.Name)}>
+              {attaque.Name}
+            </button>
+          ))}
+          <button disabled={estAuTourDuJoueur} onClick={finirTour}>Terminer le tour</button>
+          <p className="message">{message}</p>
+        </div>
+      )}
     </div>
   );
-  
-  
-};
-  export default Combat;
-  
-  
+}
+
+export default Combat;
