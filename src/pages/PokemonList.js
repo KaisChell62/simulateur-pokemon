@@ -8,7 +8,7 @@ function PokemonList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/pokemon');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/pokemon`);
         // Supprimer l'espace avant le nom
         const cleanedData = response.data.map(pokemon => {
           const cleanedPokemon = { ...pokemon };

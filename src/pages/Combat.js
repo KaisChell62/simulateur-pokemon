@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../css/Combat.css';
 
 function Combat() {
   const [pokemonList, setPokemonList] = useState([]);
@@ -20,7 +19,7 @@ function Combat() {
 
   const fetchPokemonList = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/pokemon');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/pokemon`);
       const donneesPokemon = response.data.map(pokemon => {
         const pokemonNettoye = { ...pokemon };
         if (pokemonNettoye[' Name']) {
@@ -85,7 +84,7 @@ function Combat() {
   useEffect(() => {
     const fetchAttaquesPokemon = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/moves');
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/moves`);
         setAttaquesPokemon(response.data.slice(0, 4)); // Récupérer seulement les 4 premières attaques
       } catch (error) {
         console.error('Erreur lors de la récupération des attaques Pokémon:', error);
