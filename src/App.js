@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import PokemonList from './pages/PokemonList';
 import Combat from './pages/Combat';
-import Quiz from './pages/quiz';
+import Quiz from './pages/Quiz';
 
 function App() {
   const [data, setData] = useState({
@@ -14,10 +14,15 @@ function App() {
     types: []
   });
 
+  const backendUrl = 'https://pokemon-back-psi.vercel.app'; // URL de votre backend déployé sur Vercel
+
   // Fonction pour récupérer les données depuis le backend pour une ressource donnée
   const fetchData = async (resource) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/${resource}`);
+      const response = await fetch(`${backendUrl}/api/${resource}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${resource}`);
+      }
       const data = await response.json();
       return data;
     } catch (error) {
@@ -60,7 +65,6 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* Passe les données de toutes les ressources en tant que props */}
           <Route path="/pokemon-list" element={<PokemonList data={data} />} />
           <Route path="/combat" element={<Combat />} />
           <Route path="/quiz" element={<Quiz />} />
