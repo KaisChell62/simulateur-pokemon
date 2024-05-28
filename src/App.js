@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import PokemonList from './pages/PokemonList';
 import Combat from './pages/Combat';
-import Quiz from './pages/Quiz';
+import Quiz from './pages/quiz';
 
 function App() {
   const [data, setData] = useState({
