@@ -14,7 +14,7 @@ function App() {
     types: []
   });
 
-  const backendUrl = 'https://pokemon-back-liart.vercel.app/'; // URL de votre backend déployé sur Vercel
+  const backendUrl = process.env.REACT_APP_API_URL; // Utilisation de la variable d'environnement
 
   // Fonction pour récupérer les données depuis le backend pour une ressource donnée
   const fetchData = async (resource) => {
