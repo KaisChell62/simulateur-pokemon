@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../css/Combat.css';
 
 function Combat() {
   const [pokemonList, setPokemonList] = useState([]);
