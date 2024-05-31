@@ -1,40 +1,40 @@
 hr {
-  border: none; /* Supprimer la bordure */
+  border: none; 
   height: 1px; 
   background-color: transparent; 
 }
 
 
 .navbar {
-  background-color: #ffffff; /* Couleur de fond du menu */
-  padding: 20px; /* Espacement intérieur du menu */
-  border-radius: 10px; /* Arrondi des coins du menu */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombre légère */
-  width: fit-content; /* Largeur ajustée au contenu */
-  margin: 0 auto; /* Centrage horizontal */
+  background-color: #ffffff; 
+  padding: 20px; 
+  border-radius: 10px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  width: fit-content;
+  margin: 0 auto; 
 }
 
 .navbar ul {
-  list-style-type: none; /* Suppression des puces */
-  padding: 0; /* Suppression du padding par défaut */
-  margin: 0; /* Suppression de la marge par défaut */
+  list-style-type: none; 
+  padding: 0; 
+  margin: 0; 
 }
 
 .navbar ul li {
-  display: inline; /* Affichage en ligne des éléments de liste */
-  margin-right: 20px; /* Espacement entre les éléments */
+  display: inline; 
+  margin-right: 20px; 
 }
 
 .navbar ul li:last-child {
-  margin-right: 0; /* Aucun espacement à droite pour le dernier élément */
+  margin-right: 0;
 }
 
 .navbar ul li a {
-  text-decoration: none; /* Suppression du soulignement des liens */
-  color: #333333; /* Couleur du texte */
-  font-weight: bold; /* Police en gras */
+  text-decoration: none;
+  color: #333333; 
+  font-weight: bold; 
 }
 
 .navbar ul li a:hover {
-  color: #007bff; /* Couleur du texte au survol */
+  color: #007bff; 
 }

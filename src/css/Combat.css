@@ -186,5 +186,5 @@ button.animate-color {
   display: block;
   height: 20px;
   background-color: #76c7c0;
-  width: 100%; /* Update this width dynamically in your React component */
+  width: 100%; 
 }

@@ -1,6 +1,6 @@
 body {
   font-family: 'Arial Black', sans-serif;
-  color: black; /* couleur du texte en noir */
+  color: black; 
 }
 
 
@@ -13,13 +13,13 @@ body {
 }
 
 .news-section h2 {
-  color: #FF0000; /* Rouge clair */
+  color: #FF0000; 
   font-family: 'Arial Black', sans-serif; 
 }
 
 .news-section .news-card h3,
 .news-section .news-card p {
-  color: #000; /* Noir fort */
+  color: #000; 
 }
 
 /* Styles pour les cartes de nouvelles Pokémon */
@@ -71,8 +71,8 @@ body {
 }
 
 .gallery-section h2 {
-  color: #FF0000; /* Rouge clair */
-  font-family: 'Arial Black', sans-serif; /* Police Algerian */
+  color: #FF0000; 
+  font-family: 'Arial Black', sans-serif; 
 }
 
 .pokemon-gallery {
@@ -107,13 +107,13 @@ body {
 }
 
 .guides-section h2, .useful-links-section h2 {
-  color: #FF0000; /* Rouge clair */
-  font-family: 'Arial Black', sans-serif; /* Police Algerian */
+  color: #FF0000; 
+  font-family: 'Arial Black', sans-serif; 
 }
 
 .guides-section p, .useful-links-section p {
-  color: #000; /* Noir fort */
-  font-family: 'Arial Black', sans-serif; /* Police Algerian */
+  color: #000; 
+  font-family: 'Arial Black', sans-serif; 
 }
 
 .useful-links-section ul {

@@ -14,9 +14,8 @@ function App() {
     types: []
   });
 
-  const backendUrl = process.env.REACT_APP_API_URL; // Utilisation de la variable d'environnement
+  const backendUrl = process.env.REACT_APP_API_URL; 
 
-  // Fonction pour récupérer les données depuis le backend pour une ressource donnée
   const fetchData = async (resource) => {
     try {
       const response = await fetch(`${backendUrl}/api/${resource}`);
@@ -31,7 +30,6 @@ function App() {
     }
   };
 
-  // Fonction pour récupérer les données de toutes les ressources
   const fetchAllData = async () => {
     const pokemonData = await fetchData('pokemon');
     const abilitiesData = await fetchData('abilities');
@@ -40,7 +38,6 @@ function App() {
     return { pokemon: pokemonData, abilities: abilitiesData, moves: movesData, types: typesData };
   };
 
-  // Utilise useEffect pour charger les données au chargement de l'application
   useEffect(() => {
     const fetchDataAsync = async () => {
       const allData = await fetchAllData();

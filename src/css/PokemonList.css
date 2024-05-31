@@ -47,27 +47,30 @@
 }
 
 .hp {
-  background-color: #4CAF50; /* Vert pour la santé */
+  background-color: #4CAF50; 
 }
 
 .attack {
-  background-color: #2196F3; /* Bleu pour l'attaque */
+  background-color: #2196F3; 
 }
 
 .defense {
-  background-color: #f44336; /* Rouge pour la défense */
+  background-color: #f44336; 
 }
 
 .special-attack {
-  background-color: #FFC107; /* Jaune pour l'attaque spéciale */
+  background-color: #FFC107; 
 }
 
 .special-defense {
-  background-color: #9C27B0; /* Violet pour la défense spéciale */
+  background-color: #9C27B0; 
 }
 
 .speed {
-  background-color: #FF5722; /* Orange pour la vitesse */.container {
+  background-color: #FF5722; 
+  
+  
+  .container {
     font-family: sans-serif;
     background-color: #f0f0f0;
     padding: 20px;

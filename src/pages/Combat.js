@@ -63,7 +63,7 @@ function Combat() {
     setPeutAttaquer(false);
     setTimeout(() => {
       attaquerRobot();
-    }, 5000); // Attendre  seconde avant que le robot attaque
+    }, 5000); 
   };
 
   const attaquerRobot = () => {
@@ -86,7 +86,7 @@ function Combat() {
     const fetchAttaquesPokemon = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/moves`);
-        setAttaquesPokemon(response.data.slice(0, 4)); // Récupérer seulement les 4 premières attaques
+        setAttaquesPokemon(response.data.slice(0, 4)); 
       } catch (error) {
         console.error('Erreur lors de la récupération des attaques Pokémon:', error);
       }

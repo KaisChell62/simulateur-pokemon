@@ -17,7 +17,7 @@ function PokemonList() {
           }
           return cleanedPokemon;
         });
-        // Limiter à 30 Pokémon
+       
         setPokemonData(cleanedData.slice(0, 30));
       } catch (error) {
         console.error('Error fetching data:', error);
