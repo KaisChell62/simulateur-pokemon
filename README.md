@@ -51,4 +51,4 @@ Ce projet est sous licence MIT. Consultez le fichier `LICENSE` pour plus de dét
 
 ## Voir le site en ligne
 
-Vous pouvez consulter le site en suivant ce lien : https://simulateur-pokemon.vercel.app/](https://simulateur-pokemon.vercel.app/
+Vous pouvez consulter le site en suivant ce lien : https://simulateur-pokemon.vercel.app/
